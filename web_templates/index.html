@@ -37,13 +37,10 @@
                     <p id="fileDropText">📁 Click or drop <strong>resume.txt</strong> here</p>
                 </div>
                 
-                <!-- REFERENCE & TEMPLATE HELPER BUTTONS -->
-                <div style="display:flex; flex-wrap:wrap; gap:8px; margin: 10px 0;">
-                    <a href="/api/download-reference" class="btn-template-download" title="Download sample filled resume.txt for reference" style="flex:1; text-align:center; color:#38bdf8; text-decoration:none; font-size:0.8rem; font-weight:600; background:rgba(56,189,248,0.12); padding:8px 12px; border-radius:8px; border:1px solid rgba(56,189,248,0.3); transition:all 0.2s;">
-                        💡 Download Reference resume.txt
-                    </a>
-                    <a href="/api/download-template" class="btn-template-download" title="Download blank resume.txt template to fill in" style="flex:1; text-align:center; color:#818cf8; text-decoration:none; font-size:0.8rem; font-weight:600; background:rgba(99,102,241,0.12); padding:8px 12px; border-radius:8px; border:1px solid rgba(99,102,241,0.3); transition:all 0.2s;">
-                        📄 Download Blank Template
+                <!-- BLANK TEMPLATE HELPER BUTTON -->
+                <div style="margin: 10px 0;">
+                    <a href="/api/download-template" class="btn-template-download" title="Download blank resume.txt template to fill in" style="display:block; text-align:center; color:#818cf8; text-decoration:none; font-size:0.8rem; font-weight:600; background:rgba(99,102,241,0.12); padding:8px 12px; border-radius:8px; border:1px solid rgba(99,102,241,0.3); transition:all 0.2s;">
+                        📄 Download Blank resume.txt Template
                     </a>
                 </div>
 
@@ -71,12 +68,6 @@
                         <span class="theme-title">Emerald Pro</span>
                     </div>
                 </div>
-            </div>
-
-            <!-- GEMINI API KEY (OPTIONAL OVERRIDE) -->
-            <div class="panel-section">
-                <label class="section-label">3. Gemini API Key (Optional)</label>
-                <input type="password" id="apiKeyInput" class="api-key-input" placeholder="Leave blank to use environment key">
             </div>
 
             <!-- GENERATE ACTION -->
@@ -173,7 +164,6 @@
 
         function generatePortfolio() {
             const content = document.getElementById('contentInput').value.trim();
-            const apiKey = document.getElementById('apiKeyInput').value.trim();
             const btn = document.getElementById('generateBtn');
             const spinner = document.getElementById('genSpinner');
             const btnText = document.getElementById('genBtnText');
@@ -192,8 +182,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     content: content,
-                    theme: currentTheme,
-                    api_key: apiKey
+                    theme: currentTheme
                 })
             })
             .then(r => r.json())
