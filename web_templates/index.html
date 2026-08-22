@@ -18,10 +18,10 @@
             <span class="badge-tag">GLA Bootcamp '26</span>
         </div>
         <div class="nav-actions">
-            <a href="/api/download" class="btn-download" id="downloadTopBtn">
+            <button onclick="downloadPortfolioHtml()" class="btn-download" id="downloadTopBtn">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 Download portfolio.html
-            </a>
+            </button>
         </div>
     </header>
 
@@ -80,7 +80,7 @@
             <!-- GEMINI API KEY (OPTIONAL OVERRIDE) -->
             <div class="panel-section">
                 <label class="section-label">3. Gemini API Key (Optional)</label>
-                <input type="password" id="apiKeyInput" class="api-key-input" placeholder="Leave blank to use .env key">
+                <input type="password" id="apiKeyInput" class="api-key-input" placeholder="Leave blank to use environment key">
             </div>
 
             <!-- GENERATE ACTION -->
@@ -98,8 +98,8 @@
                     <button class="btn-icon" id="btnMobile" onclick="setViewport('mobile')">📱 Mobile</button>
                 </div>
                 <div class="preview-actions">
-                    <button class="btn-icon" onclick="window.open('/api/preview', '_blank')">↗️ Open in New Tab</button>
-                    <a href="/api/download" class="btn-download">📥 Download HTML</a>
+                    <button class="btn-icon" onclick="openPreviewTab()">↗️ Open in New Tab</button>
+                    <button onclick="downloadPortfolioHtml()" class="btn-download">📥 Download HTML</button>
                 </div>
             </div>
 
@@ -111,6 +111,7 @@
 
     <script>
         let currentTheme = 'dark';
+        let latestGeneratedHtml = '';
 
         // Load default content on start and generate preview
         window.addEventListener('DOMContentLoaded', () => {
@@ -136,6 +137,7 @@
             reader.onload = function(evt) {
                 document.getElementById('contentInput').value = evt.target.result;
                 document.getElementById('fileDropText').innerText = "✅ Loaded: " + file.name;
+                generatePortfolio();
             };
             reader.readAsText(file);
         }
@@ -145,6 +147,32 @@
             document.getElementById('btnDesktop').classList.toggle('active', type === 'desktop');
             document.getElementById('btnMobile').classList.toggle('active', type === 'mobile');
             frame.classList.toggle('mobile-view', type === 'mobile');
+        }
+
+        function openPreviewTab() {
+            if (latestGeneratedHtml) {
+                const w = window.open();
+                w.document.write(latestGeneratedHtml);
+                w.document.close();
+            } else {
+                window.open('/api/preview', '_blank');
+            }
+        }
+
+        function downloadPortfolioHtml() {
+            if (!latestGeneratedHtml) {
+                window.location.href = '/api/download';
+                return;
+            }
+            const blob = new Blob([latestGeneratedHtml], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'portfolio.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
         function generatePortfolio() {
@@ -179,9 +207,13 @@
                 btnText.innerText = "✨ Generate Portfolio";
 
                 if (data.status === 'success') {
-                    // Reload iframe
                     const frame = document.getElementById('previewFrame');
-                    frame.src = '/api/preview?t=' + new Date().getTime();
+                    if (data.html) {
+                        latestGeneratedHtml = data.html;
+                        frame.srcdoc = data.html;
+                    } else {
+                        frame.src = '/api/preview?t=' + new Date().getTime();
+                    }
                 } else {
                     alert("Generation note: " + (data.message || "Failed"));
                 }

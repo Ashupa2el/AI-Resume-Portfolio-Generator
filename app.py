@@ -230,7 +230,8 @@ def generate():
     return jsonify({
         "status": "success",
         "name": portfolio_data.get("name"),
-        "theme": theme
+        "theme": theme,
+        "html": CURRENT_PORTFOLIO["html"]
     })
 
 
