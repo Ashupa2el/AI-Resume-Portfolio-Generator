@@ -17,8 +17,11 @@ from jinja2 import Environment, FileSystemLoader
 # Load environment variables
 load_dotenv()
 
+# Set base project directory safely for serverless runtimes
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Import helper functions from main.py
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, BASE_DIR)
 from main import (
     build_prompt,
     call_gemini_api,
@@ -47,11 +50,13 @@ def render_portfolio_html_string(data: dict, theme: str = "dark", inline_css: bo
     Renders the data into template.html with the selected theme and timestamp.
     """
     from datetime import datetime
-    template_path = os.path.join(os.path.dirname(__file__), "template.html")
-    style_path = os.path.join(os.path.dirname(__file__), "style.css")
+    template_path = os.path.join(BASE_DIR, "template.html")
+    style_path = os.path.join(BASE_DIR, "style.css")
     
-    with open(template_path, "r", encoding="utf-8") as f:
-        template_str = f.read()
+    template_str = ""
+    if os.path.exists(template_path):
+        with open(template_path, "r", encoding="utf-8") as f:
+            template_str = f.read()
 
     css_content = ""
     if inline_css and os.path.exists(style_path):
@@ -81,13 +86,13 @@ def index():
 @app.route("/style.css")
 @app.route("/api/style.css")
 def serve_style():
-    style_path = os.path.join(os.path.dirname(__file__), "style.css")
+    style_path = os.path.join(BASE_DIR, "style.css")
     return send_file(style_path, mimetype="text/css")
 
 
 @app.route("/api/default-content")
 def default_content():
-    resume_path = os.path.join(os.path.dirname(__file__), "resume.txt")
+    resume_path = os.path.join(BASE_DIR, "resume.txt")
     resume_text = ""
     
     if os.path.exists(resume_path):
@@ -104,7 +109,7 @@ def download_template():
     """
     Returns a blank template with empty field quotes ("") for filling in details from scratch.
     """
-    template_path = os.path.join(os.path.dirname(__file__), "resume_blank_template.txt")
+    template_path = os.path.join(BASE_DIR, "resume_blank_template.txt")
     if os.path.exists(template_path):
         with open(template_path, "r", encoding="utf-8") as f:
             content = f.read()
@@ -161,8 +166,8 @@ def download_reference():
     """
     Returns a full reference resume file with sample data to guide user formatting.
     """
-    ref_path = os.path.join(os.path.dirname(__file__), "resume_reference_example.txt")
-    resume_path = os.path.join(os.path.dirname(__file__), "resume.txt")
+    ref_path = os.path.join(BASE_DIR, "resume_reference_example.txt")
+    resume_path = os.path.join(BASE_DIR, "resume.txt")
     
     content = ""
     if os.path.exists(ref_path):
@@ -207,16 +212,19 @@ def generate():
     else:
         portfolio_data = get_mock_portfolio_data()
 
-    # Save to current cache
+    # Save to current cache in memory
     CURRENT_PORTFOLIO["data"] = portfolio_data
     CURRENT_PORTFOLIO["theme"] = theme
     CURRENT_PORTFOLIO["html"] = render_portfolio_html_string(portfolio_data, theme=theme, inline_css=True)
 
-    # Also update local portfolio.html (unless running automated unit tests)
+    # Safely write to local portfolio.html if filesystem is writable (local dev)
     if not app.testing:
-        out_path = os.path.join(os.path.dirname(__file__), "portfolio.html")
-        with open(out_path, "w", encoding="utf-8") as f:
-            f.write(CURRENT_PORTFOLIO["html"])
+        try:
+            out_path = os.path.join(BASE_DIR, "portfolio.html")
+            with open(out_path, "w", encoding="utf-8") as f:
+                f.write(CURRENT_PORTFOLIO["html"])
+        except Exception as e:
+            print(f"[WARN] Read-only serverless environment: {e}")
 
     return jsonify({
         "status": "success",
@@ -230,10 +238,13 @@ def preview():
     if CURRENT_PORTFOLIO["html"]:
         return Response(CURRENT_PORTFOLIO["html"], mimetype="text/html")
 
-    out_path = os.path.join(os.path.dirname(__file__), "portfolio.html")
+    out_path = os.path.join(BASE_DIR, "portfolio.html")
     if os.path.exists(out_path):
-        with open(out_path, "r", encoding="utf-8") as f:
-            return Response(f.read(), mimetype="text/html")
+        try:
+            with open(out_path, "r", encoding="utf-8") as f:
+                return Response(f.read(), mimetype="text/html")
+        except Exception:
+            pass
 
     data = get_mock_portfolio_data()
     CURRENT_PORTFOLIO["data"] = data
@@ -247,15 +258,10 @@ def download():
         data = get_mock_portfolio_data()
         CURRENT_PORTFOLIO["html"] = render_portfolio_html_string(data, theme=CURRENT_PORTFOLIO["theme"], inline_css=True)
 
-    out_path = os.path.join(os.path.dirname(__file__), "portfolio.html")
-    with open(out_path, "w", encoding="utf-8") as f:
-        f.write(CURRENT_PORTFOLIO["html"])
-
-    return send_file(
-        out_path,
-        as_attachment=True,
-        download_name="portfolio.html",
-        mimetype="text/html"
+    return Response(
+        CURRENT_PORTFOLIO["html"],
+        mimetype="text/html",
+        headers={"Content-Disposition": "attachment; filename=portfolio.html"}
     )
 
 
