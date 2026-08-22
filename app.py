@@ -32,8 +32,9 @@ from main import (
 
 app = Flask(
     __name__,
-    template_folder="web_templates",
-    static_folder="web_static",
+    root_path=BASE_DIR,
+    template_folder=os.path.join(BASE_DIR, "web_templates"),
+    static_folder=os.path.join(BASE_DIR, "web_static"),
     static_url_path="/static"
 )
 
