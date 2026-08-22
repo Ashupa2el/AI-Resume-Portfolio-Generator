@@ -1,0 +1,19 @@
+# Environment variables and API keys (Keep private!)
+.env
+*.env
+
+# Python byte code & cache
+__pycache__/
+*.py[cod]
+*.class
+*.so
+
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# Operating system files
+.DS_Store
+Thumbs.db

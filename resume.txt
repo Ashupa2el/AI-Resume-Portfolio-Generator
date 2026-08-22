@@ -1,0 +1,58 @@
+AKHAND PRATAP SINGH
+Email: akhand.singh.dev@example.com | Phone: +1 (555) 019-2834
+Location: India, Engineer
+LinkedIn: https://linkedin.com/in/akhand-pratap-singh | GitHub: https://github.com/akhand-singh
+Portfolio: https://akhandpratapsingh.dev
+
+PROFESSIONAL SUMMARY
+Motivated Computer Science undergraduate specializing in Artificial Intelligence and Full Stack Software Engineering. Proficient in Python, Machine Learning workflows, REST API development, and Generative AI prompt design. Experienced in building scalable web applications and intelligent data pipelines. Eager to contribute technical skills to innovative engineering teams.
+
+EDUCATION
+University of Technology
+Bachelor of Technology in Computer Science & Artificial Intelligence
+Duration: 2025 - 2029 | GPA: 9.99 / 10.0
+
+TECHNICAL SKILLS
+- Programming Languages: Python, JavaScript, TypeScript, SQL, HTML5, CSS3
+- Frameworks & Libraries: FastAPI, Flask, Jinja2, React, Pandas, NumPy, Scikit-Learn, PyTorch
+- AI & GenAI: Google Gemini API, Prompt Engineering, RAG Pipelines, NLP, LLM Evaluation
+- Developer Tools: Git, GitHub, Docker, Postman, Linux, VS Code, CI/CD Actions
+- Core Concepts: Data Structures & Algorithms, Object-Oriented Design, RESTful APIs, Responsible AI
+
+EXPERIENCE
+AI Engineering Intern | NexaTech Innovations
+June 2025 – August 2025
+- Developed and deployed an automated document extraction pipeline using Python and Gemini API, reducing manual processing time by 45%.
+- Designed and evaluated structured JSON prompting strategies to maintain 99% schema accuracy across diverse inputs.
+- Implemented automated fallback handlers, exponential backoff retries, and API quota optimization.
+
+Software Development Intern | CloudPulse Systems
+January 2025 – May 2025
+- Built responsive user dashboard components using HTML5, modern CSS3, and JavaScript connected to FastAPI endpoints.
+- Optimized PostgreSQL database queries, improving data retrieval speeds by 30%.
+- Authored automated test suites and comprehensive Swagger API documentation.
+
+PROJECTS
+SmartResume - AI Portfolio Generator
+Technologies: Python, Google Gemini API, Jinja2, HTML5, CSS3, JSON
+- Developed an automated pipeline that parses unstructured resume text, prompts Gemini for structured JSON generation, and renders an interactive, responsive portfolio website.
+- Implemented robust error handling, JSON schema validation, and missing-section conditional rendering.
+- Link: https://github.com/akhand-singh/smart-resume-portfolio
+
+MediPredict - Health Analytics Platform
+Technologies: Python, Scikit-Learn, Streamlit, Pandas, NumPy
+- Built an explainable machine learning application for clinical risk estimation achieving 93% accuracy.
+- Created interactive visualization dashboards for health metric trends and model confidence scores.
+- Link: https://github.com/akhand-singh/medipredict-ai
+
+DevCollab - Real-Time Developer Workspace
+Technologies: Python, FastAPI, WebSockets, SQLite, TailwindCSS
+- Engineered a collaborative code sharing and discussion platform supporting concurrent multi-user markdown editing.
+- Implemented secure JWT authentication and real-time activity feeds.
+- Link: https://github.com/akhand-singh/devcollab-app
+
+ACHIEVEMENTS & CERTIFICATIONS
+- 1st Place Winner - University Annual Hackathon 2025 (Built an AI-assisted accessibility tool)
+- Google Cloud Certified: Generative AI Fundamentals
+- DeepLearning.AI: Machine Learning Specialization (Coursera)
+- Active open-source contributor with 300+ algorithm challenges solved on LeetCode

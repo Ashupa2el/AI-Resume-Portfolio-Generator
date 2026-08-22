@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Portfolio Studio | Generator</title>
+    <link rel="stylesheet" href="/static/dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- TOP BAR -->
+    <header class="navbar">
+        <div class="brand">
+            <div class="logo-icon">AI</div>
+            <span class="brand-title">Portfolio Studio</span>
+            <span class="badge-tag">GLA Bootcamp '26</span>
+        </div>
+        <div class="nav-actions">
+            <a href="/api/download" class="btn-download" id="downloadTopBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download portfolio.html
+            </a>
+        </div>
+    </header>
+
+    <!-- STUDIO WORKSPACE -->
+    <main class="studio-container">
+        <!-- LEFT CONTROL PANEL -->
+        <aside class="control-panel">
+            <!-- INPUT SOURCE SELECTOR -->
+            <div class="panel-section">
+                <label class="section-label">1. Resume Input (resume.txt)</label>
+            </div>
+
+            <!-- FILE UPLOAD & TEXT AREA -->
+            <div class="panel-section">
+                <div class="file-dropzone" onclick="document.getElementById('fileInput').click()">
+                    <input type="file" id="fileInput" style="display:none" onchange="handleFileUpload(event)">
+                    <p id="fileDropText">📁 Click or drop <strong>resume.txt</strong> here</p>
+                </div>
+                
+                <!-- REFERENCE & TEMPLATE HELPER BUTTONS -->
+                <div style="display:flex; flex-wrap:wrap; gap:8px; margin: 10px 0;">
+                    <a href="/api/download-reference" class="btn-template-download" title="Download sample filled resume.txt for reference" style="flex:1; text-align:center; color:#38bdf8; text-decoration:none; font-size:0.8rem; font-weight:600; background:rgba(56,189,248,0.12); padding:8px 12px; border-radius:8px; border:1px solid rgba(56,189,248,0.3); transition:all 0.2s;">
+                        💡 Download Reference resume.txt
+                    </a>
+                    <a href="/api/download-template" class="btn-template-download" title="Download blank resume.txt template to fill in" style="flex:1; text-align:center; color:#818cf8; text-decoration:none; font-size:0.8rem; font-weight:600; background:rgba(99,102,241,0.12); padding:8px 12px; border-radius:8px; border:1px solid rgba(99,102,241,0.3); transition:all 0.2s;">
+                        📄 Download Blank Template
+                    </a>
+                </div>
+
+                <textarea id="contentInput" class="input-textarea" placeholder="Paste your resume content here..."></textarea>
+            </div>
+
+            <!-- THEME SELECTOR -->
+            <div class="panel-section">
+                <label class="section-label">2. Visual Theme</label>
+                <div class="theme-grid">
+                    <div class="theme-card active" data-theme="dark" onclick="selectTheme('dark', this)">
+                        <div class="color-dot" style="background:#6366f1;"></div>
+                        <span class="theme-title">Modern Dark</span>
+                    </div>
+                    <div class="theme-card" data-theme="light" onclick="selectTheme('light', this)">
+                        <div class="color-dot" style="background:#2563eb;"></div>
+                        <span class="theme-title">Clean Light</span>
+                    </div>
+                    <div class="theme-card" data-theme="cyber" onclick="selectTheme('cyber', this)">
+                        <div class="color-dot" style="background:#ec4899;"></div>
+                        <span class="theme-title">Cyber Neon</span>
+                    </div>
+                    <div class="theme-card" data-theme="emerald" onclick="selectTheme('emerald', this)">
+                        <div class="color-dot" style="background:#10b981;"></div>
+                        <span class="theme-title">Emerald Pro</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GEMINI API KEY (OPTIONAL OVERRIDE) -->
+            <div class="panel-section">
+                <label class="section-label">3. Gemini API Key (Optional)</label>
+                <input type="password" id="apiKeyInput" class="api-key-input" placeholder="Leave blank to use .env key">
+            </div>
+
+            <!-- GENERATE ACTION -->
+            <button class="btn-generate" id="generateBtn" onclick="generatePortfolio()">
+                <div class="spinner" id="genSpinner"></div>
+                <span id="genBtnText">✨ Generate Portfolio</span>
+            </button>
+        </aside>
+
+        <!-- RIGHT LIVE PREVIEW PANEL -->
+        <section class="preview-panel">
+            <div class="preview-toolbar">
+                <div class="viewport-toggles">
+                    <button class="btn-icon active" id="btnDesktop" onclick="setViewport('desktop')">🖥️ Desktop</button>
+                    <button class="btn-icon" id="btnMobile" onclick="setViewport('mobile')">📱 Mobile</button>
+                </div>
+                <div class="preview-actions">
+                    <button class="btn-icon" onclick="window.open('/api/preview', '_blank')">↗️ Open in New Tab</button>
+                    <a href="/api/download" class="btn-download">📥 Download HTML</a>
+                </div>
+            </div>
+
+            <div class="preview-viewport-wrapper">
+                <iframe id="previewFrame" class="preview-frame" src="/api/preview"></iframe>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let currentTheme = 'dark';
+
+        // Load default content on start and generate preview
+        window.addEventListener('DOMContentLoaded', () => {
+            fetch('/api/default-content')
+                .then(r => r.json())
+                .then(d => {
+                    document.getElementById('contentInput').value = d.resume || '';
+                    generatePortfolio();
+                });
+        });
+
+        function selectTheme(theme, el) {
+            currentTheme = theme;
+            document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            generatePortfolio();
+        }
+
+        function handleFileUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                document.getElementById('contentInput').value = evt.target.result;
+                document.getElementById('fileDropText').innerText = "✅ Loaded: " + file.name;
+            };
+            reader.readAsText(file);
+        }
+
+        function setViewport(type) {
+            const frame = document.getElementById('previewFrame');
+            document.getElementById('btnDesktop').classList.toggle('active', type === 'desktop');
+            document.getElementById('btnMobile').classList.toggle('active', type === 'mobile');
+            frame.classList.toggle('mobile-view', type === 'mobile');
+        }
+
+        function generatePortfolio() {
+            const content = document.getElementById('contentInput').value.trim();
+            const apiKey = document.getElementById('apiKeyInput').value.trim();
+            const btn = document.getElementById('generateBtn');
+            const spinner = document.getElementById('genSpinner');
+            const btnText = document.getElementById('genBtnText');
+
+            if (!content) {
+                alert("Please provide resume text content.");
+                return;
+            }
+
+            btn.disabled = true;
+            spinner.style.display = 'inline-block';
+            btnText.innerText = "Generating Portfolio...";
+
+            fetch('/api/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    content: content,
+                    theme: currentTheme,
+                    api_key: apiKey
+                })
+            })
+            .then(r => r.json())
+            .then(data => {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+                btnText.innerText = "✨ Generate Portfolio";
+
+                if (data.status === 'success') {
+                    // Reload iframe
+                    const frame = document.getElementById('previewFrame');
+                    frame.src = '/api/preview?t=' + new Date().getTime();
+                } else {
+                    alert("Generation note: " + (data.message || "Failed"));
+                }
+            })
+            .catch(err => {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+                btnText.innerText = "✨ Generate Portfolio";
+                alert("Error connecting to server: " + err);
+            });
+        }
+    </script>
+</body>
+</html>
