@@ -271,7 +271,7 @@ def get_mock_portfolio_data() -> dict:
     Provides mock structured data for offline verification when an API key is not yet set.
     """
     return {
-        "name": "Akhand Pratap Singh",
+        "name": "Ashutosh Patel",
         "headline": "AI & Software Engineering Undergraduate",
         "summary": "Motivated Computer Science undergraduate specializing in Artificial Intelligence and Full Stack Software Engineering. Proficient in Python, Machine Learning workflows, and Generative AI prompt design.",
         "skills": {
@@ -304,13 +304,13 @@ def get_mock_portfolio_data() -> dict:
                 "title": "SmartResume - AI Portfolio Generator",
                 "description": "Automated pipeline that parses unstructured resume text, prompts Gemini for structured JSON generation, and renders an interactive portfolio.",
                 "technologies": ["Python", "Gemini API", "Jinja2", "HTML5", "CSS3"],
-                "link": "https://github.com/akhand-singh/smart-resume-portfolio"
+                "link": "https://ashupa2el.github.io/Portfolio/"
             },
             {
                 "title": "MediPredict - Health Analytics Platform",
                 "description": "Explainable machine learning application for clinical risk estimation with interactive visual dashboards.",
                 "technologies": ["Python", "Scikit-Learn", "Streamlit", "Pandas"],
-                "link": "https://github.com/akhand-singh/medipredict-ai"
+                "link": "https://e-sim-dashboard.vercel.app/"
             }
         ],
         "achievements": [
@@ -319,12 +319,12 @@ def get_mock_portfolio_data() -> dict:
             "300+ algorithm challenges solved on LeetCode"
         ],
         "contact": {
-            "email": "akhand.singh.dev@example.com",
+            "email": "patelashutosh661@gmail.com",
             "phone": "+1 (555) 019-2834",
             "location": "San Francisco, CA",
-            "linkedin": "https://linkedin.com/in/akhand-pratap-singh",
-            "github": "https://github.com/akhand-singh",
-            "website": "https://akhandpratapsingh.dev"
+            "linkedin": "https://ashupa2el.github.io/Portfolio/",
+            "github": "https://github.com/Ashupa2el",
+            "website": "https://ashutosh.dev"
         }
     }
 

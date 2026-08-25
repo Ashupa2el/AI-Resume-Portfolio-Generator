@@ -25,7 +25,7 @@ class TestWebApp(unittest.TestCase):
 
     def test_generate_from_resume(self):
         payload = {
-            "content": "Akhand Pratap Singh\nSoftware Developer\nPython, Docker\nGPA: 3.9",
+            "content": "Ashutosh Patel\nSoftware Developer\nPython, Docker\nGPA: 3.9",
             "theme": "cyber",
             "api_key": ""
         }
