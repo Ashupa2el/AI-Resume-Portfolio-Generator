@@ -1,8 +1,8 @@
-AKHAND PRATAP SINGH
-Email: akhand.singh.dev@example.com | Phone: +1 (555) 019-2834
+Ashutosh Patel
+Email: patelashutosh661@gmail.com | Phone: +1 (555) 019-2834
 Location: India, Engineer
-LinkedIn: https://linkedin.com/in/akhand-pratap-singh | GitHub: https://github.com/akhand-singh
-Portfolio: https://akhandpratapsingh.dev
+LinkedIn: https://www.linkedin.com/in/ashutoshpa2el | GitHub: https://github.com/Ashupa2el
+Portfolio: https://ashupa2el.github.io/Portfolio/
 
 PROFESSIONAL SUMMARY
 Motivated Computer Science undergraduate specializing in Artificial Intelligence and Full Stack Software Engineering. Proficient in Python, Machine Learning workflows, REST API development, and Generative AI prompt design. Experienced in building scalable web applications and intelligent data pipelines. Eager to contribute technical skills to innovative engineering teams.
