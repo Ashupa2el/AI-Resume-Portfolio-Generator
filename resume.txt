@@ -1,8 +1,8 @@
-AKHAND PRATAP SINGH
-Email: akhand.singh.dev@example.com | Phone: +1 (555) 019-2834
+Ashutosh Patel
+Email: patelashutosh661@gmail.com | Phone: +1 (555) 019-2834
 Location: India, Engineer
-LinkedIn: https://linkedin.com/in/akhand-pratap-singh | GitHub: https://github.com/akhand-singh
-Portfolio: https://akhandpratapsingh.dev
+LinkedIn: https://www.linkedin.com/in/ashutoshpa2el | GitHub: https://github.com/Ashupa2el
+Portfolio: https://ashupa2el.github.io/Portfolio/
 
 PROFESSIONAL SUMMARY
 Motivated Computer Science undergraduate specializing in Artificial Intelligence and Full Stack Software Engineering. Proficient in Python, Machine Learning workflows, REST API development, and Generative AI prompt design. Experienced in building scalable web applications and intelligent data pipelines. Eager to contribute technical skills to innovative engineering teams.
@@ -10,11 +10,11 @@ Motivated Computer Science undergraduate specializing in Artificial Intelligence
 EDUCATION
 University of Technology
 Bachelor of Technology in Computer Science & Artificial Intelligence
-Duration: 2025 - 2029 | GPA: 9.99 / 10.0
+Duration: 2025 - 2029 | GPA: 8.65 / 10.0
 
 TECHNICAL SKILLS
 - Programming Languages: Python, JavaScript, TypeScript, SQL, HTML5, CSS3
-- Frameworks & Libraries: FastAPI, Flask, Jinja2, React, Pandas, NumPy, Scikit-Learn, PyTorch
+- Frameworks & Libraries: FastAPI, Flask, React, Pandas, NumPy, Scikit-Learn, PyTorch
 - AI & GenAI: Google Gemini API, Prompt Engineering, RAG Pipelines, NLP, LLM Evaluation
 - Developer Tools: Git, GitHub, Docker, Postman, Linux, VS Code, CI/CD Actions
 - Core Concepts: Data Structures & Algorithms, Object-Oriented Design, RESTful APIs, Responsible AI
@@ -46,7 +46,7 @@ Technologies: Python, Scikit-Learn, Streamlit, Pandas, NumPy
 - Link: https://github.com/akhand-singh/medipredict-ai
 
 DevCollab - Real-Time Developer Workspace
-Technologies: Python, FastAPI, WebSockets, SQLite, TailwindCSS
+Technologies: Python, FastAPI, WebSockets, SQLite
 - Engineered a collaborative code sharing and discussion platform supporting concurrent multi-user markdown editing.
 - Implemented secure JWT authentication and real-time activity feeds.
 - Link: https://github.com/akhand-singh/devcollab-app
